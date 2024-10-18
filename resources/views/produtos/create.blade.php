@@ -4,6 +4,21 @@
             {{ __('Cadastrar Novo Produto') }}
         </h2>
     </x-slot>
+    <!-- Exibe erros de validação -->
+    <div class="m-6">
+        @if ($errors->any())
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded mb-6" role="alert">
+                <p class="font-bold">Ocorreu um erro:</p>
+                <ul class="mt-2">
+                    @foreach ($errors->all() as $error)
+                        <li class="text-sm">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+    </div>
+
     <!-- Formulário de Importação de Produtos via Excel -->
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -21,6 +36,12 @@
                                 required>
                         </div>
                         <div class="flex justify-end">
+                            <!-- Botão para baixar o PDF de exemplo -->
+                            <a href="{{ asset('pdf/exemplo_produto.xlsx') }}"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mr-3">
+                                Baixar Excel de Exemplo
+                            </a>
+
                             <button type="submit"
                                 class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                                 Importar
@@ -38,18 +59,7 @@
             <h2 class="text-2xl font-bold text-gray-800 mb-2">Importar Produtos Manualmente</h2>
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 bg-white">
-                    <!-- Exibe erros de validação -->
-                    @if ($errors->any())
-                        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded mb-6" role="alert">
-                            <p class="font-bold">Ocorreu um erro:</p>
-                            <ul class="mt-2">
-                                @foreach ($errors->all() as $error)
-                                    <li class="text-sm">{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
+                    
                     <form action="{{ route('produtos.store') }}" method="POST" class="space-y-6">
                         @csrf
 
